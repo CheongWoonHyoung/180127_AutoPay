@@ -1,4 +1,4 @@
-package com.example.woonhyoungcheong.autopay;
+package com.example.sarpa.autopay;
 
 import org.junit.Test;
 

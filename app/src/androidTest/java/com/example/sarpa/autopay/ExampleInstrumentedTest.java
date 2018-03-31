@@ -1,4 +1,4 @@
-package com.example.woonhyoungcheong.autopay;
+package com.example.sarpa.autopay;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

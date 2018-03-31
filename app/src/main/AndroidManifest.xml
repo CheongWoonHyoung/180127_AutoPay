@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.woonhyoungcheong.autopay">
+    package="com.example.sarpa.autopay">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="a952b3b90aeeef86eafa59c3ee61ac50"/>
 
     <application
         android:allowBackup="true"
@@ -10,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.sarpa.autopay.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +26,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.sarpa.autopay.MyPageActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
+        <activity android:name="com.example.sarpa.autopay.MyCardActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
+        <activity android:name="com.example.sarpa.autopay.MonthlyReportActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
+        <activity android:name="com.example.sarpa.autopay.EnrollCardActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
+        <activity android:name="com.example.sarpa.autopay.AnalysisActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
+        <activity android:name="com.example.sarpa.autopay.SettingActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
     </application>
+
+
+
 
 </manifest>
