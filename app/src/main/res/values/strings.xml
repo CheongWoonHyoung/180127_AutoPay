@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="login_status">Not Logged in</string>
 
     <string name="MyPage">마이 페이지</string>
     <string name="MyCard">등록된 카드</string>

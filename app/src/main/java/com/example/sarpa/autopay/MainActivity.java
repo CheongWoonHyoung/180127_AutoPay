@@ -1,7 +1,9 @@
 package com.example.sarpa.autopay;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +25,17 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.kakao.auth.ErrorCode;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -41,10 +56,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
-                    0 );
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    0);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,25 +68,25 @@ public class MainActivity extends AppCompatActivity
 
         //////////////////////init////////////////////////
 
-        btnShowLocation = (FloatingActionButton)findViewById(R.id.fab);
+        btnShowLocation = (FloatingActionButton) findViewById(R.id.fab);
         // show location button click event
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // create class object
-                if(gps == null) {
-                    gps = new GPSTracker(MainActivity.this,mHandler);
-                }else{
+                if (gps == null) {
+                    gps = new GPSTracker(MainActivity.this, mHandler);
+                } else {
                     gps.Update();
                 }
 
                 // check if GPS enabled
-                if(gps.canGetLocation()){
+                if (gps.canGetLocation()) {
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
                     // \n is for new line
                     Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     // can't get location
                     // GPS or Network is not enabled
                     // Ask user to enable GPS/network in settings
@@ -79,10 +94,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
-
-
-
 
 
         ////////////   Future SAMSUNG PAY   //////////////
@@ -97,7 +108,6 @@ public class MainActivity extends AppCompatActivity
         });
 
         //////////////////////////////////////////////////
-
 
 
         //////////// Open and Close Drawer Bar Action //////////
@@ -116,18 +126,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void makeNewGpsService(){
-        if(gps == null) {
-            gps = new GPSTracker(MainActivity.this,mHandler);
-        }else{
+    public void makeNewGpsService() {
+        if (gps == null) {
+            gps = new GPSTracker(MainActivity.this, mHandler);
+        } else {
             gps.Update();
         }
 
     }
-    public void logPrint(String str){
-        editText.append(getTimeStr()+" "+str+"\n");
+
+    public void logPrint(String str) {
+        editText.append(getTimeStr() + " " + str + "\n");
     }
-    public String getTimeStr(){
+
+    public String getTimeStr() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdfNow = new SimpleDateFormat("MM/dd HH:mm:ss");
@@ -184,7 +196,7 @@ public class MainActivity extends AppCompatActivity
             // Handle EnrollCard item action
             Intent intent = new Intent(this, EnrollCardActivity.class);
             startActivity(intent);
-        }else if  (id == R.id.Map){
+        } else if (id == R.id.Map) {
             Intent intent = new Intent(this, MapActivity.class);
             startActivity(intent);
         } else if (id == R.id.MonthlyReport) {
