@@ -66,6 +66,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sarpa.autopay.MainActivity" />
         </activity>
+        <activity android:name="com.example.sarpa.autopay.MapActivity"
+            android:parentActivityName="com.example.sarpa.autopay.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sarpa.autopay.MainActivity" />
+        </activity>
     </application>
 
 
