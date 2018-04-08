@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="@string/kakao_app_key"/>
+
 
     <application
         android:name=".GlobalApplication"
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="@string/kakao_app_key"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="16a32ab2274442b11c08bbff4f066741"/>
 
         <activity
             android:name="com.example.sarpa.autopay.MainActivity"

@@ -3,8 +3,7 @@ package com.example.sarpa.autopay;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
-
-import net.daum.android.map.MapView;
+import net.daum.mf.map.api.MapView;
 
 /**
  * Created by woonhyoungcheong on 2018. 4. 1..
@@ -17,7 +16,7 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
 
         MapView mapView = new MapView(this);
-
+        mapView.setDaumMapApiKey("16a32ab2274442b11c08bbff4f066741");
 
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);

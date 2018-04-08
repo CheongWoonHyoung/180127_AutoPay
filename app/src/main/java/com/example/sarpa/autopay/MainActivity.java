@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingActionButton btnShowLocation;
+    Button btnShowLocation;
     EditText editText;
     GPSTracker gps = null;
 
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         //////////////////////init////////////////////////
 
-        btnShowLocation = (FloatingActionButton) findViewById(R.id.fab);
+        btnShowLocation = (Button) findViewById(R.id.cGPS);
         // show location button click event
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
             @Override
