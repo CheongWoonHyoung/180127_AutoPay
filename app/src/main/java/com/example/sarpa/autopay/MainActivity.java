@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     GPSTracker gps = null;
 
     public static Handler mHandler;
-
+    SearchView searchView;
     public static int RENEW_GPS = 1;
     public static int SEND_PRINT = 2;
 
@@ -56,6 +57,23 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        searchView=(SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("목적지 검색");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getBaseContext(), query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getBaseContext(), newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

@@ -12,6 +12,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <SearchView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:elevation="2dp"
+            android:background="#fff"
+            android:layout_height="wrap_content">
+        </SearchView>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_weight="4"
