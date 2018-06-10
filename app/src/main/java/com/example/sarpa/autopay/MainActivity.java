@@ -1,5 +1,7 @@
 package com.example.sarpa.autopay;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -59,6 +61,56 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 다이얼로그 바디
+        AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+        // 메세지
+        alert_confirm.setMessage("GPS 기능을 사용하여 매장을 검색하시겠습니까?");
+        // 확인 버튼 리스너
+        alert_confirm.setPositiveButton("확인", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (gps == null) {
+                    gps = new GPSTracker(MainActivity.this, mHandler);
+                } else {
+                    gps.Update();
+                }
+
+                // check if GPS enabled
+                if (gps.canGetLocation()) {
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+                    // \n is for new line
+                    Toast.makeText(getApplicationContext(), "현재 위치 - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                } else {
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+            }
+        });
+
+        // 취소버튼
+        alert_confirm.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+
+        AlertDialog alert = alert_confirm.create();
+
+
+        // 다이얼로그 타이틀
+        alert.setTitle("GPS Search");
+        // 다이얼로그 보기
+        alert.show();
+
+
+
+
         searchView=(SearchView)findViewById(R.id.searchView);
         searchView.setQueryHint("목적지 검색");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -87,7 +139,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //////////////////////init////////////////////////
-
+/*
         btnShowLocation = (Button) findViewById(R.id.cGPS);
         // show location button click event
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +166,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
+*/
 
         ////////////   Future SAMSUNG PAY   //////////////
 

@@ -15,4 +15,6 @@
     <string name="Analysis">소비 분석</string>
     <string name="Setting">설정</string>
     <string name="Map">지도</string>
+    <string name="CurrentPosition">\u00B7현재 위치</string>
+    <string name="CardRecommend">\u00B7추천 카드</string>
 </resources>
