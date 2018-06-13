@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 //import android.support.v7.widget.SearchView;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
@@ -28,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kakao.auth.ErrorCode;
@@ -48,6 +51,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnShowLocation;
+    Button btn_card_left;
+    Button btn_card_right;
+    ImageView iv_card;
+    public int card_cnt = 0;
+
+    TextView tv_card_name;
+    TextView tv_card_priority;
+
     EditText editText;
     GPSTracker gps = null;
 
@@ -55,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     SearchView searchView;
     public static int RENEW_GPS = 1;
     public static int SEND_PRINT = 2;
+
+    String packName = this.getPackageName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +103,54 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        btn_card_left = (Button)findViewById(R.id.card_left_arrow);
+        btn_card_right = (Button)findViewById(R.id.card_right_arrow);
+        iv_card = (ImageView)findViewById(R.id.card_img_viewer);
+        tv_card_name = (TextView)findViewById(R.id.card_name);
+        tv_card_priority = (TextView)findViewById(R.id.card_priority);
+
+        final String c_names[] = {"AutoPay", "신한카드 S20 체크", "국민카드 노리 체크", "현대카드 M 체크"};
+
+        btn_card_left.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if (card_cnt > 0) {
+                    card_cnt = card_cnt - 1;
+                }
+                String card_id = "@drawable/card_img"+card_cnt;
+                Log.w("left:", card_id);
+                int resID = getResources().getIdentifier(card_id, "drawable", getPackageName());
+                iv_card.setImageResource(resID);
+
+                tv_card_name.setText(c_names[card_cnt]);
+                if (card_cnt == 1){
+                    tv_card_priority.setText("(주거래) ");
+                }
+                else{
+                    tv_card_priority.setText("");
+                }
+            }
+        });
+        btn_card_right.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if (card_cnt < 3) {
+                    card_cnt = card_cnt + 1;
+                }
+                String card_id = "@drawable/card_img"+card_cnt;
+                Log.w("right:", card_id);
+                int resID = getResources().getIdentifier(card_id, "drawable", getPackageName());
+                iv_card.setImageResource(resID);
+
+                tv_card_name.setText(c_names[card_cnt]);
+                if (card_cnt == 1){
+                    tv_card_priority.setText("(주거래) ");
+                }
+                else{
+                    tv_card_priority.setText("");
+                }
+            }
+        });
+
+
         // 취소버튼
         alert_confirm.setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
@@ -98,6 +159,9 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+
+
 
 
         AlertDialog alert = alert_confirm.create();
