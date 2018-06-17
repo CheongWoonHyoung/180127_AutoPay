@@ -86,6 +86,7 @@ public class MapActivity extends AppCompatActivity {
         mapView.addPOIItem(mCustomMarker);
         mapView.selectPOIItem(mCustomMarker, true);
         mapView.setMapCenterPoint(my_MARKER_POINT, true);
+
         mapView.setPOIItemEventListener(new MapView.POIItemEventListener() {
             @Override
             public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
@@ -96,12 +97,16 @@ public class MapActivity extends AppCompatActivity {
 
             @Override
             public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                ((MainActivity)MainActivity.mContext).change(1);
             }
 
             @Override
             public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                ((MainActivity)MainActivity.mContext).change(1);
             }
 
             @Override
