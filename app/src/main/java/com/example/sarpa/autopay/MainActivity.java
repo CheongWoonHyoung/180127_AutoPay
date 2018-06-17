@@ -1,6 +1,7 @@
 package com.example.sarpa.autopay;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     ImageView iv_card;
     public int card_cnt = 0;
 
+    TextView currentposition;
     TextView tv_card_name;
     TextView tv_card_priority;
     TextView tv_recom_card_name;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     EditText editText;
     GPSTracker gps = null;
 
+    public static Context mContext;
     public static Handler mHandler;
     SearchView searchView;
     public static int RENEW_GPS = 1;
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mContext = this;
         // 다이얼로그 바디
         AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
         // 메세지
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        currentposition = (TextView)findViewById(R.id.currentposition);
         btn_card_left = (Button)findViewById(R.id.card_left_arrow);
         btn_card_right = (Button)findViewById(R.id.card_right_arrow);
         iv_card = (ImageView)findViewById(R.id.card_img_viewer);
@@ -319,6 +323,12 @@ public class MainActivity extends AppCompatActivity
         //}
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void change(int num){
+        if (num ==1){
+            currentposition.setText("울주군 구영리 랑콩뜨레");
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
