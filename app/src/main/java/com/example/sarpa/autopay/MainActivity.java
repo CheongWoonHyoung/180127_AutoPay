@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity
 
     TextView tv_card_name;
     TextView tv_card_priority;
+    TextView tv_recom_card_name;
+    TextView tv_recom_card_value;
 
     EditText editText;
     GPSTracker gps = null;
@@ -108,8 +110,13 @@ public class MainActivity extends AppCompatActivity
         iv_card = (ImageView)findViewById(R.id.card_img_viewer);
         tv_card_name = (TextView)findViewById(R.id.card_name);
         tv_card_priority = (TextView)findViewById(R.id.card_priority);
+        tv_recom_card_name = (TextView)findViewById(R.id.recommend_card_id);
+        tv_recom_card_value = (TextView)findViewById(R.id.recommend_card_value);
 
         final String c_names[] = {"AutoPay", "신한카드 S20 체크", "국민카드 노리 체크", "현대카드 M 체크"};
+        final String c_value[] = {"N", "2.50", "2.30", "1.80"};
+
+        //\u002A 할인율 : N % (VAT 비 포함)
 
         btn_card_left.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -122,6 +129,8 @@ public class MainActivity extends AppCompatActivity
                 iv_card.setImageResource(resID);
 
                 tv_card_name.setText(c_names[card_cnt]);
+                tv_recom_card_name.setText(c_names[card_cnt]);
+                tv_recom_card_value.setText("\u002A 할인율 : " + c_value[card_cnt] + " % (VAT 비 포함)");
                 if (card_cnt == 1){
                     tv_card_priority.setText("(주거래) ");
                 }
@@ -141,6 +150,8 @@ public class MainActivity extends AppCompatActivity
                 iv_card.setImageResource(resID);
 
                 tv_card_name.setText(c_names[card_cnt]);
+                tv_recom_card_name.setText(c_names[card_cnt]);
+                tv_recom_card_value.setText("\u002A 할인율 : " + c_value[card_cnt] + " % (VAT 비 포함)");
                 if (card_cnt == 1){
                     tv_card_priority.setText("(주거래) ");
                 }
@@ -159,10 +170,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-
-
-
 
         AlertDialog alert = alert_confirm.create();
 
