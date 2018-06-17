@@ -58,8 +58,8 @@ public class MapActivity extends AppCompatActivity {
 
         // check if GPS enabled
         if (gps.canGetLocation()) {
-            latitude = gps.getLatitude();
-            longitude = gps.getLongitude();
+            latitude = 35.573239;
+            longitude = 129.241236;
             Toast.makeText(getApplicationContext(), "현재 위치 - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
 
             my_MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
