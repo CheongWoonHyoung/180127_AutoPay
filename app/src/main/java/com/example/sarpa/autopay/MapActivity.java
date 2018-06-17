@@ -70,7 +70,7 @@ public class MapActivity extends AppCompatActivity {
             gps.showSettingsAlert();
         }
         mCustomMarker = new MapPOIItem();
-        String name = "Custom Marker";
+        String name = "랑콩뜨레 구영점";
         mCustomMarker.setItemName(name);
         mCustomMarker.setTag(1);
         mCustomMarker.setMapPoint(my_MARKER_POINT);
