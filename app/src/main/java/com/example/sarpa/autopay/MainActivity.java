@@ -51,6 +51,12 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    final String c_names[] = {"AutoPay", "신한카드 S20 체크", "국민카드 노리 체크", "현대카드 M 체크"};
+    String c_value[];
+    final String c_value1[] = {"N", "2.50", "2.30", "1.80"};
+    final String c_value2[] = {"N", "2.35", "2.80", "1.90"};
+
+    private int c_value_id=1;
     Button btnShowLocation;
     Button btn_card_left;
     Button btn_card_right;
@@ -79,6 +85,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+
+        currentposition = (TextView)findViewById(R.id.currentposition);
+        btn_card_left = (Button)findViewById(R.id.card_left_arrow);
+        btn_card_right = (Button)findViewById(R.id.card_right_arrow);
+        iv_card = (ImageView)findViewById(R.id.card_img_viewer);
+        tv_card_name = (TextView)findViewById(R.id.card_name);
+        tv_card_priority = (TextView)findViewById(R.id.card_priority);
+        tv_recom_card_name = (TextView)findViewById(R.id.recommend_card_id);
+        tv_recom_card_value = (TextView)findViewById(R.id.recommend_card_value);
+
+        currentposition.setText("파리바게트 구영점");
+
         // 다이얼로그 바디
         AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
         // 메세지
@@ -108,38 +126,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        currentposition = (TextView)findViewById(R.id.currentposition);
-        btn_card_left = (Button)findViewById(R.id.card_left_arrow);
-        btn_card_right = (Button)findViewById(R.id.card_right_arrow);
-        iv_card = (ImageView)findViewById(R.id.card_img_viewer);
-        tv_card_name = (TextView)findViewById(R.id.card_name);
-        tv_card_priority = (TextView)findViewById(R.id.card_priority);
-        tv_recom_card_name = (TextView)findViewById(R.id.recommend_card_id);
-        tv_recom_card_value = (TextView)findViewById(R.id.recommend_card_value);
-
-        final String c_names[] = {"AutoPay", "신한카드 S20 체크", "국민카드 노리 체크", "현대카드 M 체크"};
-        final String c_value[] = {"N", "2.50", "2.30", "1.80"};
-
-        //\u002A 할인율 : N % (VAT 비 포함)
-
         btn_card_left.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if (card_cnt > 0) {
                     card_cnt = card_cnt - 1;
                 }
-                String card_id = "@drawable/card_img"+card_cnt;
-                Log.w("left:", card_id);
-                int resID = getResources().getIdentifier(card_id, "drawable", getPackageName());
-                iv_card.setImageResource(resID);
-
-                tv_card_name.setText(c_names[card_cnt]);
-                tv_recom_card_name.setText(c_names[card_cnt]);
-                tv_recom_card_value.setText("\u002A 할인율 : " + c_value[card_cnt] + " % (VAT 비 포함)");
-                if (card_cnt == 1){
-                    tv_card_priority.setText("(주거래) ");
+                if (c_value_id == 1) {
+                    content_view_updater(card_cnt, c_value1);
                 }
                 else{
-                    tv_card_priority.setText("");
+                    content_view_updater(card_cnt, c_value2);
                 }
             }
         });
@@ -148,19 +144,11 @@ public class MainActivity extends AppCompatActivity
                 if (card_cnt < 3) {
                     card_cnt = card_cnt + 1;
                 }
-                String card_id = "@drawable/card_img"+card_cnt;
-                Log.w("right:", card_id);
-                int resID = getResources().getIdentifier(card_id, "drawable", getPackageName());
-                iv_card.setImageResource(resID);
-
-                tv_card_name.setText(c_names[card_cnt]);
-                tv_recom_card_name.setText(c_names[card_cnt]);
-                tv_recom_card_value.setText("\u002A 할인율 : " + c_value[card_cnt] + " % (VAT 비 포함)");
-                if (card_cnt == 1){
-                    tv_card_priority.setText("(주거래) ");
+                if (c_value_id == 1) {
+                    content_view_updater(card_cnt, c_value1);
                 }
                 else{
-                    tv_card_priority.setText("");
+                    content_view_updater(card_cnt, c_value2);
                 }
             }
         });
@@ -175,15 +163,10 @@ public class MainActivity extends AppCompatActivity
         });
 
         AlertDialog alert = alert_confirm.create();
-
-
         // 다이얼로그 타이틀
         alert.setTitle("GPS Search");
         // 다이얼로그 보기
         alert.show();
-
-
-
 
         searchView=(SearchView)findViewById(R.id.searchView);
         searchView.setQueryHint("목적지 검색");
@@ -272,6 +255,36 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String place_name = intent.getStringExtra("place_name");
+            int card_cnt_up = intent.getIntExtra("card_cnt", 2);
+            c_value_id = intent.getIntExtra("c_value_id", 1);
+            content_view_updater(card_cnt_up, c_value2);
+            currentposition.setText(place_name);
+        }
+    }
+
+    public void content_view_updater(int card_cnt, String[] c_value){
+        String card_id = "@drawable/card_img"+card_cnt;
+        Log.w("left:", card_id);
+        int resID = getResources().getIdentifier(card_id, "drawable", getPackageName());
+        iv_card.setImageResource(resID);
+
+        tv_card_name.setText(c_names[card_cnt]);
+        tv_recom_card_name.setText(c_names[card_cnt]);
+        tv_recom_card_value.setText("\u002A 할인율 : " + c_value[card_cnt] + " % (VAT 비 포함)");
+        if (card_cnt == 1){
+            tv_card_priority.setText("(주거래) ");
+        }
+        else{
+            tv_card_priority.setText("");
+        }
+    }
     public void makeNewGpsService() {
         if (gps == null) {
             gps = new GPSTracker(MainActivity.this, mHandler);
