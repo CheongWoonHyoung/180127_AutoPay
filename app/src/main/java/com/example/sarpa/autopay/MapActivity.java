@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class MapActivity extends AppCompatActivity {
 
     private double latitude;
     private double longitude;
+    Button btn_goback;
 
     GPSTracker gps = null;
 
@@ -36,10 +38,6 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-
-
-
-
         mapView = new MapView(this);
         mapView.setDaumMapApiKey("16a32ab2274442b11c08bbff4f066741");
 
@@ -47,7 +45,21 @@ public class MapActivity extends AppCompatActivity {
         mapViewContainer.addView(mapView);
 
         createCustomMarker(mapView);
+
+        btn_goback = (Button) findViewById(R.id.map_goback);
+
+        btn_goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("place_name", "랑콩뜨레 구영점");
+                intent.putExtra("card_cnt", 2);
+                startActivity(intent);
+                ((MainActivity)MainActivity.mContext).change(1);
+            }
+        });
     }
+
 
     private void createCustomMarker(MapView mapView) {
         if (gps == null) {
@@ -81,38 +93,9 @@ public class MapActivity extends AppCompatActivity {
         mCustomMarker.setCustomImageAutoscale(false);
         mCustomMarker.setCustomImageAnchor(0.5f, 1.0f);
 
-
-
         mapView.addPOIItem(mCustomMarker);
         mapView.selectPOIItem(mCustomMarker, true);
         mapView.setMapCenterPoint(my_MARKER_POINT, true);
-
-        mapView.setPOIItemEventListener(new MapView.POIItemEventListener() {
-            @Override
-            public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                ((MainActivity)MainActivity.mContext).change(1);
-            }
-
-            @Override
-            public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                ((MainActivity)MainActivity.mContext).change(1);
-            }
-
-            @Override
-            public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                ((MainActivity)MainActivity.mContext).change(1);
-            }
-
-            @Override
-            public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
-            }
-        });
     }
+
 }

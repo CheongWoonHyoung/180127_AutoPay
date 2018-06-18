@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         // 취소버튼
         alert_confirm.setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
