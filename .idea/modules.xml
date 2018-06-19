@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/180127_AutoPay.iml" filepath="$PROJECT_DIR$/180127_AutoPay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/project_autopay.iml" filepath="$PROJECT_DIR$/project_autopay.iml" />
+      <module fileurl="file://C:\Users\cheon\Documents\180127_AutoPay\app\app.iml" filepath="C:\Users\cheon\Documents\180127_AutoPay\app\app.iml" />
+      <module fileurl="file://C:\Users\cheon\Documents\180127_AutoPay\project_autopay.iml" filepath="C:\Users\cheon\Documents\180127_AutoPay\project_autopay.iml" />
     </modules>
   </component>
 </project>

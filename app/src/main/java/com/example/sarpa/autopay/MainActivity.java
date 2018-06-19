@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(getBaseContext(), query, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, MapActivity.class);
+                startActivity(intent);
                 return false;
             }
 
