@@ -55,8 +55,10 @@ public class MapActivity extends AppCompatActivity {
                 intent.putExtra("place_name", "랑콩뜨레 구영점");
                 intent.putExtra("card_cnt", 2);
                 intent.putExtra("c_value_id", 2);
+                intent.putExtra("alert_flag", 1);
                 startActivity(intent);
                 ((MainActivity)MainActivity.mContext).change(1);
+                finish();
             }
         });
     }

@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     final String c_names[] = {"AutoPay", "신한카드 S20 체크", "국민카드 노리 체크", "현대카드 M 체크"};
-    String c_value[];
     final String c_value1[] = {"N", "2.50", "2.30", "1.80"};
     final String c_value2[] = {"N", "2.35", "2.80", "1.90"};
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         tv_recom_card_name = (TextView)findViewById(R.id.recommend_card_id);
         tv_recom_card_value = (TextView)findViewById(R.id.recommend_card_value);
 
-        currentposition.setText("파리바게트 구영점");
+        content_view_updater(0, c_value1);
 
         // 다이얼로그 바디
         AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
@@ -105,6 +104,8 @@ public class MainActivity extends AppCompatActivity
         alert_confirm.setPositiveButton("확인", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                currentposition.setText("울주군 구영리 파리바게트");
+                content_view_updater(1, c_value1);
                 if (gps == null) {
                     gps = new GPSTracker(MainActivity.this, mHandler);
                 } else {
@@ -166,7 +167,11 @@ public class MainActivity extends AppCompatActivity
         // 다이얼로그 타이틀
         alert.setTitle("GPS Search");
         // 다이얼로그 보기
-        alert.show();
+        Intent intent = getIntent();
+        int alert_flag = intent.getIntExtra("alert_flag", 0);
+        if (alert_flag == 0) {
+            alert.show();
+        }
 
         searchView=(SearchView)findViewById(R.id.searchView);
         searchView.setQueryHint("목적지 검색");
@@ -174,7 +179,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getBaseContext(), query, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), query, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(mContext, MapActivity.class);
                 startActivity(intent);
                 return false;
@@ -182,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getBaseContext(), newText, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), newText, Toast.LENGTH_LONG).show();
                 return false;
             }
         });
